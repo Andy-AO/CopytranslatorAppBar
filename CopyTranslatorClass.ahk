@@ -5,7 +5,7 @@ CopyTranslator.initConfig()
 Class CopyTranslator{
   static configFilePath := "config.json"
   ,configFileControler := new JsonFile(CopyTranslator.configFilePath)
-  ,MesToastContent := "Press Alt+Shift+z to switch the display / hide status."
+  ,MesToastContent := "Press Alt+Shift+z or click the tray icon to switch the display / hide status."
   ,MesToast := new MesToast("CopytranslatorAppBar",CopyTranslator.MesToastContent)
   ,title := "Copytranslator ahk_exe copytranslator.exe"
   ,config := ""
