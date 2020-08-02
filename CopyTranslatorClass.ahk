@@ -28,10 +28,15 @@ Class CopyTranslator{
         return this.initConfig()
       }
     }
-
+    RemoveAppBar(){
+      CopyTranslator.RestoreStyle()
+      DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
+      CopyTranslator.hadAppBar := false
+    return 
+    }
     ToggleGUI(ItemName := "", ItemPos := "", MenuName := ""){
       if(CopyTranslator.hadAppBar){
-        GoSub, RemoveAppBar
+        CopyTranslator.RemoveAppBar()
       } Else {
         GoSub, RegisterAppBar
       }
@@ -72,7 +77,7 @@ Class CopyTranslator{
 
 
   QuitScript(ExitReason := "", ExitCode := ""){
-    GoSub, RemoveAppbar
+    CopyTranslator.RemoveAppBar()
     ;  This un-does the earlier SetParent
     DllCall( "SetParent", "uint", CopyTranslator.hwnd, "uint", 0 )
     ExitApp

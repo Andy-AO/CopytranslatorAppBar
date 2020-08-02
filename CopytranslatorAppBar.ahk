@@ -112,13 +112,6 @@ RegisterAppBar:
   WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
 Return
 
-RemoveAppBar:
-  CopyTranslator.RestoreStyle()
-  DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
-  CopyTranslator.hadAppBar := false
-Return
-
-
 ABM_Callback( wParam, LParam, Msg, HWnd ) {
   return
 }
