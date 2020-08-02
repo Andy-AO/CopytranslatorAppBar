@@ -30,7 +30,7 @@ CopyTranslator.switch()
 CopyTranslator.MesToast.show() 
 
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
-uAppWidth=200                           ; "ideal" width for a vertical appbar
+uAppWidth := Ceil(CopyTranslator.config.widthRatio * A_ScreenWidth)                     ; "ideal" width for a vertical appbar
 uAppHeight=136                          ; "ideal" height when horizonal
 
 hAB := WinExist(CopyTranslator.title)
