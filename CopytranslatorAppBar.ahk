@@ -45,7 +45,8 @@ SetBatchLines -1
 CoordMode, Mouse  , Screen
 CoordMode, Tooltip, Screen
 Menu, Tray, NoStandard
-Menu, Tray, Add, AppBar Hide/Show, ToggleGUI
+HideOrShowFuncObj := new Method(CopyTranslator.ToggleGUI,CopyTranslator)
+Menu, Tray, Add, AppBar Hide/Show, %HideOrShowFuncObj%
 Menu, Tray, Add
 Menu, Tray, Standard
 Menu, Tray, Default, AppBar Hide/Show
@@ -124,13 +125,7 @@ ABM_Callback( wParam, LParam, Msg, HWnd ) {
 
 
 +!z::
-  ToggleGUI:
-    if(CopyTranslator.hadAppBar){
-      GoSub, RemoveAppBar
-    } Else {
-      GoSub, RegisterAppBar
-    }
-  Return
+  CopyTranslator.ToggleGUI()
 return
 
 

@@ -29,6 +29,15 @@ Class CopyTranslator{
       }
     }
 
+    ToggleGUI(ItemName := "", ItemPos := "", MenuName := ""){
+      if(CopyTranslator.hadAppBar){
+        GoSub, RemoveAppBar
+      } Else {
+        GoSub, RegisterAppBar
+      }
+      return
+    }
+
     RestoreStyle(){
       if(CopyTranslator.hadAppBar){
         WinSet, Style, +0xC00000,% CopyTranslator.ahk_id ; Restore the window's title bar
@@ -62,7 +71,7 @@ Class CopyTranslator{
    }
 
 
-  QuitScript(ExitReason, ExitCode){
+  QuitScript(ExitReason := "", ExitCode := ""){
     GoSub, RemoveAppbar
     ;  This un-does the earlier SetParent
     DllCall( "SetParent", "uint", CopyTranslator.hwnd, "uint", 0 )
