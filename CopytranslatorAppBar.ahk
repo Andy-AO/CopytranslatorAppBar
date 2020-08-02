@@ -26,9 +26,8 @@ Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
           
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
-CopyTranslator.MesToast.show() 
-
 CopyTranslator.switch()
+CopyTranslator.MesToast.show() 
 
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
 uAppWidth=200                           ; "ideal" width for a vertical appbar
