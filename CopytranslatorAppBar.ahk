@@ -26,14 +26,13 @@ Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
           
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
-CopyTranslator.switch()
+
 CopyTranslator.MesToast.show() 
 
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
 uAppWidth := Ceil(CopyTranslator.config.widthRatio * A_ScreenWidth)                     ; "ideal" width for a vertical appbar
 uAppHeight=136                          ; "ideal" height when horizonal
 
-hAB := WinExist(CopyTranslator.title)
 hProgman := WinExist(CopyTranslator.title)
 
 Gui +LastFound
@@ -41,7 +40,6 @@ hGUI := WinExist()
 hProgman := DllCall( "FindWindowEx", "uint",0, "uint",0, "str", "Progman", "uint",0)
  
 ; preserve current positioning
-WinGetPos, HX,HY,HW,HH, ahk_id %hAB% ;保存一下当前的位置
 
 SetBatchLines -1
 CoordMode, Mouse  , Screen
@@ -74,7 +72,6 @@ if ((uEdge = 0) OR (uEdge = 2)) {
 }
 
 
-
 ABM := DllCall( "RegisterWindowMessage", Str,"AppBarMsg" )
 OnMessage( ABM, "ABM_Callback" )
 OnMessage( (WM_MOUSEMOVE := 0x200) , "CheckMousePos" )
@@ -82,7 +79,7 @@ OnMessage( (WM_MOUSEMOVE := 0x200) , "CheckMousePos" )
 ; APPBARDATA : http://msdn2.microsoft.com/en-us/library/ms538008.aspx
 VarSetCapacity( APPBARDATA , 36, 0 )
 Off :=  NumPut(    36, APPBARDATA )     ; cbSize
-Off :=  NumPut(   hAB, Off+0 )          ; hWnd
+Off :=  NumPut(CopyTranslator.hwnd, Off+0 )          ; hWnd
 Off :=  NumPut(   ABM, Off+0 )          ; uCallbackMessage
 Off :=  NumPut( uEdge, Off+0 )          ; uEdge: left=0,top=1,right=2,bottom=3
 Off :=  NumPut(    GX, Off+0 )          ; rc.left
@@ -90,15 +87,20 @@ Off :=  NumPut(    GY, Off+0 )          ; rc.top
 Off :=  NumPut( GX+GW, Off+0 )          ; rc.right
 Off :=  NumPut( GY+GH, Off+0 )          ; rc.bottom
 Off :=  NumPut(     1, Off+0 )          ; lParam
-GoSub, RegisterAppBar
 
-ChangeStyle(hAB)
+if(CopyTranslator.config.SelfStart){
+  GoSub, RegisterAppBar
+}
 
-OnExit, QuitScript
+
+OnExit(new Method(CopyTranslator.QuitScript,CopyTranslator))
 Return
 
 
 RegisterAppBar:
+  CopyTranslator.switch()
+  CopyTranslator.ChangeStyle()
+  CopyTranslator.hadAppBar := true
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_NEW:=0x0),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
@@ -106,22 +108,15 @@ RegisterAppBar:
   GY := NumGet(APPBARDATA, 20 )
   GW := NumGet(APPBARDATA, 24 ) - GX
   GH := NumGet(APPBARDATA, 28 ) - GY
-  WinMove, ahk_id %hAB%,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
+  WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
 Return
 
 RemoveAppBar:
+  CopyTranslator.RestoreStyle()
   DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
+  CopyTranslator.hadAppBar := false
 Return
 
-QuitScript:
-  GoSub, RemoveAppbar
-  ;  This un-does the earlier SetParent
-  DllCall( "SetParent", "uint", hAB, "uint", 0 )
-  RestoreStyle(hAB)
-  WinMove, ahk_id %hAB%,, %HX%, %HY%, %HW%, %HH% ;恢复到原来的位置
-  WinShow, ahk_id %hAB%
-  ExitApp
-Return
 
 ABM_Callback( wParam, LParam, Msg, HWnd ) {
   return
@@ -130,27 +125,12 @@ ABM_Callback( wParam, LParam, Msg, HWnd ) {
 
 +!z::
   ToggleGUI:
-    If DllCall("IsWindowVisible", UInt,hAB) {
-      WinHide, ahk_id %hAB% ;隐藏和展示
+    if(CopyTranslator.hadAppBar){
       GoSub, RemoveAppBar
     } Else {
-      WinShow, ahk_id %hAB%
       GoSub, RegisterAppBar
     }
   Return
 return
 
-ChangeStyle(hAB){
-  WinSet, Style, -0xC00000, ahk_id %hAB%  ; Remove the window's title bar 删除窗口的标题栏
-  WinSet, ExStyle, +0x80, ahk_id %hAB%    ; Remove it from the alt-tab list 让他从切换栏中也移除
-  WinSet, ExStyle, -0x00040000, ahk_id %hAB%    ; Turn off WS_EX_APPWINDOW 这个看不懂，反正也是去掉某一个窗口属性
-  return
-}
 
-
-RestoreStyle(hAB){
-  WinSet, Style, +0xC00000, ahk_id %hAB%  ; Restore the window's title bar
-  WinSet, ExStyle, -0x80, ahk_id %hAB%    ; Restore it to the alt-tab list ;恢复到原来的属性
-  WinSet, ExStyle, +0x00040000, ahk_id %hAB%    ; Turn on WS_EX_APPWINDOW
-  return
-}
