@@ -26,7 +26,6 @@ Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
           
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
-
 CopyTranslator.MesToast.show() 
 
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
@@ -72,7 +71,6 @@ if ((uEdge = 0) OR (uEdge = 2)) {
   GH := uAppHeight
 }
 
-
 ABM := DllCall( "RegisterWindowMessage", Str,"AppBarMsg" )
 OnMessage( ABM, "ABM_Callback" )
 OnMessage( (WM_MOUSEMOVE := 0x200) , "CheckMousePos" )
@@ -92,34 +90,15 @@ Off :=  NumPut( GY+GH, Off+0 )          ; rc.bottom
 Off :=  NumPut(     1, Off+0 )          ; lParam
 
 if(CopyTranslator.config.SelfStart){
-  GoSub, RegisterAppBar
+  CopyTranslator.RegisterAppBar()
 }
 
-
 OnExit(new Method(CopyTranslator.QuitScript,CopyTranslator))
-Return
-
-
-RegisterAppBar:
-  CopyTranslator.switch()
-  CopyTranslator.ChangeStyle()
-  CopyTranslator.hadAppBar := true
-  Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_NEW:=0x0),UInt,&APPBARDATA)
-  Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
-  Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
-  
-  GX := NumGet(APPBARDATA, 16 )
-  GY := NumGet(APPBARDATA, 20 )
-  GW := NumGet(APPBARDATA, 24 ) - GX
-  GH := NumGet(APPBARDATA, 28 ) - GY
- 
-  WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
 Return
 
 ABM_Callback( wParam, LParam, Msg, HWnd ) {
   return
 }
-
 
 +!z::
   CopyTranslator.ToggleGUI()

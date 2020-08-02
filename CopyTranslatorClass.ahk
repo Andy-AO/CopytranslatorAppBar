@@ -30,6 +30,23 @@ Class CopyTranslator{
         return this.initConfig()
       }
     }
+    RegisterAppBar(){
+      CopyTranslator.switch()
+      CopyTranslator.ChangeStyle()
+      CopyTranslator.hadAppBar := true
+      Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_NEW:=0x0),UInt,&APPBARDATA)
+      Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
+      Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
+      
+      GX := NumGet(APPBARDATA, 16 )
+      GY := NumGet(APPBARDATA, 20 )
+      GW := NumGet(APPBARDATA, 24 ) - GX
+      GH := NumGet(APPBARDATA, 28 ) - GY
+     
+      WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
+      
+      return
+    }
     RemoveAppBar(){
       CopyTranslator.RestoreStyle()
       DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
@@ -40,7 +57,7 @@ Class CopyTranslator{
       if(CopyTranslator.hadAppBar){
         CopyTranslator.RemoveAppBar()
       } Else {
-        GoSub, RegisterAppBar
+        CopyTranslator.RegisterAppBar()
       }
       return
     }
