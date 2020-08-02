@@ -1,7 +1,6 @@
 
 global APPBARDATA
 
-
 CopyTranslator.initConfig()
 
 Class CopyTranslator{
@@ -14,6 +13,7 @@ Class CopyTranslator{
   ,initConfigCount := 0
   ,initConfigCountLimit := 3
   ,hadAppBar := false
+  
     initConfig(){
       try{
         this.config := CopyTranslator.configFileControler
@@ -30,6 +30,7 @@ Class CopyTranslator{
         return this.initConfig()
       }
     }
+    
     RegisterAppBar(){
       CopyTranslator.switch()
       CopyTranslator.ChangeStyle()
@@ -44,15 +45,16 @@ Class CopyTranslator{
       GH := NumGet(APPBARDATA, 28 ) - GY
      
       WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
-      
       return
     }
+    
     RemoveAppBar(){
       CopyTranslator.RestoreStyle()
       DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
       CopyTranslator.hadAppBar := false
-    return 
+      return 
     }
+    
     ToggleGUI(ItemName := "", ItemPos := "", MenuName := ""){
       if(CopyTranslator.hadAppBar){
         CopyTranslator.RemoveAppBar()

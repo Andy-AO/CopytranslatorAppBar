@@ -103,5 +103,3 @@ ABM_Callback( wParam, LParam, Msg, HWnd ) {
 +!z::
   CopyTranslator.ToggleGUI()
 return
-
-
