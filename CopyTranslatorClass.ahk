@@ -31,6 +31,7 @@ Class CopyTranslator{
     RemoveAppBar(){
       CopyTranslator.RestoreStyle()
       DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
+      LogPrintln(APPBARDATA,A_LineFile  "("  A_LineNumber  ")"  " : " "APPBARDATA >>> `r`n")
       CopyTranslator.hadAppBar := false
     return 
     }

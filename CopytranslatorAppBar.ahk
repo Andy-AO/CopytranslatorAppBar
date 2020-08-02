@@ -89,6 +89,8 @@ Off :=  NumPut( GX+GW, Off+0 )          ; rc.right
 Off :=  NumPut( GY+GH, Off+0 )          ; rc.bottom
 Off :=  NumPut(     1, Off+0 )          ; lParam
 
+LogPrintln(APPBARDATA,A_LineFile  "("  A_LineNumber  ")"  " : " "APPBARDATA >>> `r`n")
+
 if(CopyTranslator.config.SelfStart){
   GoSub, RegisterAppBar
 }
@@ -105,10 +107,9 @@ RegisterAppBar:
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_NEW:=0x0),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
-  GX := NumGet(APPBARDATA, 16 )
-  GY := NumGet(APPBARDATA, 20 )
-  GW := NumGet(APPBARDATA, 24 ) - GX
-  GH := NumGet(APPBARDATA, 28 ) - GY
+  LogPrintln(APPBARDATA,A_LineFile  "("  A_LineNumber  ")"  " : " "APPBARDATA >>> `r`n")
+  
+ 
   WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
 Return
 
