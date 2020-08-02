@@ -108,7 +108,10 @@ RegisterAppBar:
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
   
-  
+  GX := NumGet(APPBARDATA, 16 )
+  GY := NumGet(APPBARDATA, 20 )
+  GW := NumGet(APPBARDATA, 24 ) - GX
+  GH := NumGet(APPBARDATA, 28 ) - GY
  
   WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
 Return
