@@ -4,7 +4,6 @@ Class CopyTranslator{
   ,configFileControler := new JsonFile(CopyTranslator.configFilePath)
   ,MesToastContent := "Press Alt+Shift+z to switch the display / hide status."
   ,MesToast := new MesToast("CopytranslatorAppBar",CopyTranslator.MesToastContent)
-  
   ,title := "Copytranslator ahk_exe copytranslator.exe"
   
   ,config := CopyTranslator.configFileControler
@@ -13,6 +12,14 @@ Class CopyTranslator{
           ,"setBarOnStart",true
           ,"autoRun",true
           ,"winWaitSec",7))
+          
+   findPathOfCopyTranslator(){
+    Options := 1
+    ,Filter := "*.exe"
+    FileSelectFile, path , %Options%, , Title, %Filter%
+    return path
+   }
+   
   switch(){
     if(!WinActive(this.title)){
       isExist := false
@@ -21,8 +28,20 @@ Class CopyTranslator{
       }
       catch,ex{
         thePath :=  this.config.path
-        MsgBox,Run Failed:%thePath%
-        ExitApp
+        ,theOption := 4+48
+        ,theTitle := "Copytranslator"
+        ,theContent := "Run Failed:" "`r`n" thePath "`r`n" "`r`n" "Do you want to find the path of copyTranslator.exe?"
+        
+        MsgBox , % theOption, %theTitle% , %theContent%
+        
+        IfMsgBox Yes
+        {
+          this.config.path := this.findPathOfCopyTranslator()
+          this.configFileControler.store(this.config.path)
+          return this.switch()
+        }
+        else
+            ExitApp
       }
     }
   }
