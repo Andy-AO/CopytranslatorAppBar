@@ -23,29 +23,12 @@ SendMode Input
 SetWorkingDir %A_ScriptDir%            
 
 Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
+          
+#Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
-theMesToast := new MesToast("","Press Alt+Shift+z to switch the display / hide status.")
+CopyTranslator.MesToast.show() 
 
-theMesToast.show() 
-
-Class CopyTranslator{
-  static title := "Copytranslator ahk_exe copytranslator.exe"
-  static path := "C:\Users\Andy\AppData\Local\Programs\copytranslator\copytranslator.exe"
-}
-
-if(!WinActive(CopyTranslator.title)){
-  isExist := false
-  try{
-    isExist := Switcher.switch(CopyTranslator.title,CopyTranslator.path,8)
-  }
-  catch,ex{
-    thePath :=  CopyTranslator.path
-    MsgBox,Run Failed:%thePath%
-    ExitApp
-  }
-
-}
-
+CopyTranslator.switch()
 
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
 uAppWidth=200                           ; "ideal" width for a vertical appbar
