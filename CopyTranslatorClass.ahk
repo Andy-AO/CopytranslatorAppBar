@@ -17,10 +17,10 @@ Class CopyTranslator{
     if(!WinActive(this.title)){
       isExist := false
       try{
-        isExist := Switcher.switch(this.title,this.path,this.config.winWaitSec)
+        isExist := Switcher.switch(this.title,this.config.path,this.config.winWaitSec)
       }
       catch,ex{
-        thePath :=  this.path
+        thePath :=  this.config.path
         MsgBox,Run Failed:%thePath%
         ExitApp
       }
