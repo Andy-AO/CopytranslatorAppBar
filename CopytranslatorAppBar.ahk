@@ -28,18 +28,18 @@ theMesToast := new MesToast("","Press Alt+Shift+z to switch the display / hide s
 
 theMesToast.show() 
 
-Class GlobalWin{
+Class CopyTranslator{
   static title := "Copytranslator ahk_exe copytranslator.exe"
   static path := "C:\Users\Andy\AppData\Local\Programs\copytranslator\copytranslator.exe"
 }
 
-if(!WinActive(GlobalWin.title)){
+if(!WinActive(CopyTranslator.title)){
   isExist := false
   try{
-    isExist := Switcher.switch(GlobalWin.title,GlobalWin.path,8)
+    isExist := Switcher.switch(CopyTranslator.title,CopyTranslator.path,8)
   }
   catch,ex{
-    thePath :=  GlobalWin.path
+    thePath :=  CopyTranslator.path
     MsgBox,Run Failed:%thePath%
     ExitApp
   }
@@ -51,10 +51,8 @@ uEdge=2                                 ; left=0,top=1,right=2,bottom=3
 uAppWidth=200                           ; "ideal" width for a vertical appbar
 uAppHeight=136                          ; "ideal" height when horizonal
 
-DetectHiddenWindows, On
-
-hAB := WinExist(GlobalWin.title)
-hProgman := WinExist(GlobalWin.title)
+hAB := WinExist(CopyTranslator.title)
+hProgman := WinExist(CopyTranslator.title)
 
 Gui +LastFound
 hGUI := WinExist()
