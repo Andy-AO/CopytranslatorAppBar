@@ -34,6 +34,11 @@ Class CopyTranslator{
         WinSet, Style, +0xC00000,% CopyTranslator.ahk_id ; Restore the window's title bar
         WinSet, ExStyle, -0x80,% CopyTranslator.ahk_id   ; Restore it to the alt-tab list ;恢复到原来的属性
         WinSet, ExStyle, +0x00040000,% CopyTranslator.ahk_id   ; Turn on WS_EX_APPWINDOW
+        
+        thePos := CopyTranslator.pos
+        ,HX := thePos.X,HY := thePos.Y
+        ,HW := thePos.W,HH := thePos.H,
+        
         WinMove, % CopyTranslator.ahk_id,, %HX%, %HY%, %HW%, %HH% ;恢复到原来的位置
         return
       }
