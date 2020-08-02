@@ -77,7 +77,9 @@ ABM := DllCall( "RegisterWindowMessage", Str,"AppBarMsg" )
 OnMessage( ABM, "ABM_Callback" )
 OnMessage( (WM_MOUSEMOVE := 0x200) , "CheckMousePos" )
 
-; APPBARDATA : http://msdn2.microsoft.com/en-us/library/ms538008.aspx
+; APPBARDATA : http://msdn.microsoft.com/en-us/library/ms538008.aspx
+;~ https://docs.microsoft.com/zh-cn/windows/win32/api/shellapi/ns-shellapi-appbardata?redirectedfrom=MSDN
+
 VarSetCapacity( APPBARDATA , 36, 0 )
 Off :=  NumPut(    36, APPBARDATA )     ; cbSize
 Off :=  NumPut(CopyTranslator.hwnd, Off+0 )          ; hWnd
@@ -88,8 +90,6 @@ Off :=  NumPut(    GY, Off+0 )          ; rc.top
 Off :=  NumPut( GX+GW, Off+0 )          ; rc.right
 Off :=  NumPut( GY+GH, Off+0 )          ; rc.bottom
 Off :=  NumPut(     1, Off+0 )          ; lParam
-
-LogPrintln(APPBARDATA,A_LineFile  "("  A_LineNumber  ")"  " : " "APPBARDATA >>> `r`n")
 
 if(CopyTranslator.config.SelfStart){
   GoSub, RegisterAppBar
@@ -107,7 +107,7 @@ RegisterAppBar:
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_NEW:=0x0),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
   Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
-  LogPrintln(APPBARDATA,A_LineFile  "("  A_LineNumber  ")"  " : " "APPBARDATA >>> `r`n")
+  
   
  
   WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
