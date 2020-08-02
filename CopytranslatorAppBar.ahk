@@ -17,7 +17,7 @@ SendMode Input
 SetFormat,Float,0.2
 FileEncoding , UTF-8
 
-#Include D:\AHKs\Dev\_CoreLib.ahk
+#Include %A_ScriptDir%\BeanLib\BeanLib.ahk
 #NoEnv                                 
 SendMode Input                          
 SetWorkingDir %A_ScriptDir%            

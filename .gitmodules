@@ -1,0 +1,3 @@
+[submodule "BeanLib"]
+	path = BeanLib
+	url = git@github.com:Andy-AO/BeanLib.git
