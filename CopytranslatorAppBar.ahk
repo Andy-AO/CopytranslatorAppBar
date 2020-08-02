@@ -66,7 +66,7 @@ if (uEdge = 3) {
   GY := 0
 }
 
-if (uEdge in 0,2) {
+if ((uEdge = 0) OR (uEdge = 2)) {
   GW := uAppWidth
   GH := A_ScreenHeight
 } else {
