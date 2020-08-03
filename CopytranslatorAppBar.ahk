@@ -19,6 +19,7 @@ SetFormat,Float,0.2
 FileEncoding , UTF-8
 
 #Include %A_ScriptDir%\BeanLib\BeanLib.ahk
+global ToolName := "Copytrans" "latorAppBar"
 #NoEnv                                 
 SendMode Input                          
 SetWorkingDir %A_ScriptDir%            
