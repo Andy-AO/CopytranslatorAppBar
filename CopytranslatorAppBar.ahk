@@ -1,5 +1,4 @@
 
-#Include D:\AHKs\Dev\_CoreLib.ahk
 Hotstring("EndChars"," ")
 #Hotstring ? O Z
 
