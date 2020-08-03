@@ -1,4 +1,6 @@
 
+global Version := 0.1
+
 Hotstring("EndChars"," ")
 #Hotstring ? O Z
 
@@ -43,10 +45,16 @@ CoordMode, Tooltip, Screen
 Menu, Tray, NoStandard
 HideOrShowFuncObj := new Method(CopyTranslator.ToggleGUI,CopyTranslator)
 Menu, Tray, Add, AppBar Hide/Show, %HideOrShowFuncObj%
+Menu, Tray, Add, About, ShowAbout
 Menu, Tray, Add
 Menu, Tray, Standard
 Menu, Tray, Default, AppBar Hide/Show
 Menu, Tray, Click, 1
+
+ShowAbout(ItemName := "", ItemPos := "", MenuName := ""){
+  MsgBox,Version  %Version%
+  return ErrorLevel
+}
 
 if (uEdge = 2) {
   GX := A_ScreenWidth - uAppWidth
