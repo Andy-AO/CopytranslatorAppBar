@@ -20,9 +20,12 @@ FileEncoding , UTF-8
 
 #Include %A_ScriptDir%\BeanLib\BeanLib.ahk
 
-
-
-OnError("ErrorHandler")
+if(A_IsCompiled){
+  OnError("ErrorHandler")
+}
+else{
+  Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
+}
 
 ErrorHandler(ex){
     theOption := 4+48
@@ -42,7 +45,7 @@ ErrorHandler(ex){
 SendMode Input                          
 SetWorkingDir %A_ScriptDir%            
 
-Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
+
           
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
