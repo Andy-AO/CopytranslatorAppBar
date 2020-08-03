@@ -26,8 +26,6 @@ Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
           
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
-CopyTranslator.MesToast.show() 
-
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
 uAppWidth := Ceil(CopyTranslator.config.widthRatio * A_ScreenWidth)                     ; "ideal" width for a vertical appbar
 uAppHeight=136                          ; "ideal" height when horizonal
@@ -94,7 +92,10 @@ if(CopyTranslator.config.SelfStart){
 }
 
 OnExit(new Method(CopyTranslator.QuitScript,CopyTranslator))
-Return
+
+CopyTranslator.MesToast.show() 
+
+return
 
 ABM_Callback( wParam, LParam, Msg, HWnd ) {
   return
