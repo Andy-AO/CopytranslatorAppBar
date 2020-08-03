@@ -23,7 +23,13 @@ FileEncoding , UTF-8
 
 global ToolName := "Copytrans" "latorAppBar"
 
-OnError("ErrorHandler")
+
+if(A_IsCompiled){
+  OnError("ErrorHandler")
+}
+else{
+  Menu, Tray, %icoPath%, ,1
+}
 
 ErrorHandler(ex){
     theOption := 4+48
@@ -43,7 +49,9 @@ ErrorHandler(ex){
 SendMode Input                          
 SetWorkingDir %A_ScriptDir%            
 
-Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
+icoPath := "CopytranslatorAppBar.ico"
+
+
           
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
