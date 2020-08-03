@@ -124,11 +124,18 @@ Class CopyTranslator{
     return A_ScriptDir "\" "copytranslator.exe"
   }
   
+  getSwitcher(){
+    if(this.Switcher = ""){
+      this.Switcher := new Switcher()
+      this.Switcher.Options := ""
+    }
+    return this.Switcher
+  }
   switch(){
     if(!WinActive(this.title)){
       isExist := false
       try{
-        isExist := Switcher.switch(this.title,this.config.path,this.config.winWaitSec)
+        isExist := this.getSwitcher().switch(this.title,this.config.path,this.config.winWaitSec)
         CopyTranslator.hwnd := WinExist(CopyTranslator.title)
       }
       catch,ex{
