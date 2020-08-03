@@ -21,13 +21,12 @@ FileEncoding , UTF-8
 #Include %A_ScriptDir%\BeanLib\BeanLib.ahk
 
 
-global ToolName := "Copytrans" "latorAppBar"
 
 OnError("ErrorHandler")
 
 ErrorHandler(ex){
     theOption := 4+48
-    ,theTitle := ToolName
+    ,theTitle := CopyTranslator.ToolName
     ,theContent := "Unhandled exception:" "`r`n" "`r`n"  "There is an error in the program. Do you want to try again?"
     MsgBox , % theOption, %theTitle% , %theContent%
     IfMsgBox Yes
