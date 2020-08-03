@@ -110,7 +110,7 @@ Class CopyTranslator{
 
   ChangeStyle(){
     if(!CopyTranslator.hadAppBar){
-      CopyTranslator.isChangedStyle := true
+      CopyTranslator.hadAppBar := true
       WinGetPos, HX,HY,HW,HH, % CopyTranslator.ahk_id ;保存一下当前的位置
       CopyTranslator.pos := Object("X",HX,"Y",HY,"W",HW,"H",HH)
       WinSet, Style, -0xC00000, % CopyTranslator.ahk_id  ; Remove the window's title bar 删除窗口的标题栏
