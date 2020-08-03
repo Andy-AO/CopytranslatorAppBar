@@ -3,9 +3,10 @@ global APPBARDATA
 
 Class CopyTranslator{
   static configFilePath := "config.json"
+  ,ToolName := "Copytrans" "latorAppBar"
   ,configFileControler := new JsonFile(CopyTranslator.configFilePath)
   ,MesToastContent := "Press Alt+Shift+z or click the tray icon to switch the display / hide status."
-  ,MesToast := new MesToast(ToolName,CopyTranslator.MesToastContent)
+  ,MesToast := new MesToast(CopyTranslator.ToolName,CopyTranslator.MesToastContent)
   ,title := "Copytranslator ahk_exe copytranslator.exe"
   ,config := CopyTranslator.initConfig()
   ,initConfigCount := 0
@@ -141,7 +142,7 @@ Class CopyTranslator{
         }
 
         theOption := 4+48
-        ,theTitle := ToolName
+        ,theTitle := CopyTranslator.ToolName
         ,theContent := "Run Failed:" "`r`n" thePath "`r`n" "`r`n" "Do you want to find the path of copyTranslator.exe?"
         MsgBox , % theOption, %theTitle% , %theContent%
         IfMsgBox Yes
