@@ -119,6 +119,10 @@ Class CopyTranslator{
     return
   }
   
+  findPathInRootDir(){
+    return A_ScriptDir "\" "copytranslator.exe"
+  }
+  
   switch(){
     if(!WinActive(this.title)){
       isExist := false
@@ -128,7 +132,15 @@ Class CopyTranslator{
       }
       catch,ex{
         thePath :=  this.config.path
-        ,theOption := 4+48
+        PathInRootDir := CopyTranslator.findPathInRootDir()
+        if(thePath != PathInRootDir){
+          this.config.path := PathInRootDir
+          if(this.config.path != "")
+            this.configFileControler.store(this.config) 
+          return this.switch()
+        }
+
+        theOption := 4+48
         ,theTitle := "Copytranslator"
         ,theContent := "Run Failed:" "`r`n" thePath "`r`n" "`r`n" "Do you want to find the path of copyTranslator.exe?"
         MsgBox , % theOption, %theTitle% , %theContent%
