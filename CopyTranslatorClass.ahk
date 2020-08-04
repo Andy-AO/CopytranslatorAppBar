@@ -1,28 +1,34 @@
 
 global APPBARDATA
 
+CopyTranslator.main()
+
 Class CopyTranslator{
   static configFilePath := "config.json"
   ,ToolName := "Copytrans" "latorAppBar"
-  ,configFileControler := new JsonFile(CopyTranslator.configFilePath)
+  ,configFileControler := ""
   ,MesToastContent := "Press Alt+Shift+z or click the tray icon to switch the display / hide status."
-  ,MesToast := new MesToast(CopyTranslator.ToolName,CopyTranslator.MesToastContent)
+  ,MesToast := ""
   ,title := "Copytranslator ahk_exe copytranslator.exe"
-  ,config := CopyTranslator.initConfig()
+  ,config := ""
   ,initConfigCount := 0
   ,initConfigCountLimit := 3
   ,hadAppBar := false
   
-    initConfigBase(){
-        return CopyTranslator.configFileControler
-          .init(Object("path","C:\Users\" A_UserName "\AppData\Local\Programs\copytranslator\copytranslator.exe"
-                  ,"widthRatio",0.1
-                  ,"SelfStart",true
-                  ,"winWaitSec",7))      
-    }
+  main(){
+    CopyTranslator.MesToast := new MesToast(CopyTranslator.ToolName,CopyTranslator.MesToastContent)
+    CopyTranslator.configFileControler := new JsonFile(CopyTranslator.configFilePath)
+    CopyTranslator.initConfig()
+    return
+  }
+
     initConfig(){
       try{
-        return CopyTranslator.initConfigBase()
+        CopyTranslator.config := CopyTranslator.configFileControler
+              .init(Object("path","C:\Users\" A_UserName "\AppData\Local\Programs\copytranslator\copytranslator.exe"
+                      ,"widthRatio",0.1
+                      ,"SelfStart",true
+                      ,"winWaitSec",7))  
       }
       catch,ex{
         if(_EX.isRuntimeException(ex))
