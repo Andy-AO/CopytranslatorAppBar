@@ -14,6 +14,7 @@ Class CopyTranslator{
   ,initConfigCount := 0
   ,initConfigCountLimit := 3
   ,hadAppBar := false
+  ,wait := false
   
   main(){
     CopyTranslator.MesToast := new MesToast(CopyTranslator.ToolName,CopyTranslator.MesToastContent)
@@ -66,10 +67,14 @@ Class CopyTranslator{
     }
     
     ToggleGUI(ItemName := "", ItemPos := "", MenuName := ""){
-      if(CopyTranslator.hadAppBar){
-        CopyTranslator.RemoveAppBar()
-      } Else {
-        CopyTranslator.RegisterAppBar()
+      if(CopyTranslator.wait = false){
+        CopyTranslator.wait := true
+        if(CopyTranslator.hadAppBar){
+          CopyTranslator.RemoveAppBar()
+        } Else {
+          CopyTranslator.RegisterAppBar()
+        }
+        CopyTranslator.wait := false
       }
       return
     }
