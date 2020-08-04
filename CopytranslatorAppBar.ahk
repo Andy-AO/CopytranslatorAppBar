@@ -3,18 +3,15 @@ global Version := 0.1
 
 Hotstring("EndChars"," ")
 #Hotstring ? O Z
-
 #NoEnv 
-
 #Warn All , StdOut
 #Warn ClassOverwrite , MsgBox
 #Warn LocalSameAsGlobal, Off
-
+SendMode Input 
+SetWorkingDir %A_ScriptDir%
 #SingleInstance force
-
 Process, Priority,, High
 SetTitleMatchMode 2
-SendMode Input
 SetFormat,Float,0.2
 FileEncoding , UTF-8
 
@@ -27,26 +24,7 @@ else{
   Menu, Tray, Icon,CopytranslatorAppBar.ico, ,1
 }
 
-ErrorHandler(ex){
-    theOption := 4+48
-    ,theTitle := CopyTranslator.ToolName
-    ,theContent := "Unhandled exception:" "`r`n" "`r`n"  "There is an error in the program. Do you want to try again?"
-    MsgBox , % theOption, %theTitle% , %theContent%
-    IfMsgBox Yes
-    { 
-      Reload
-    }
-    else
-        ExitApp
-    return
-}
 
-#NoEnv                                 
-SendMode Input                          
-SetWorkingDir %A_ScriptDir%            
-
-
-          
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
 uEdge=2                                 ; left=0,top=1,right=2,bottom=3
@@ -133,3 +111,17 @@ ABM_Callback( wParam, LParam, Msg, HWnd ) {
 +!z::
   CopyTranslator.ToggleGUI()
 return
+
+ErrorHandler(ex){
+    theOption := 4+48
+    ,theTitle := CopyTranslator.ToolName
+    ,theContent := "Unhandled exception:" "`r`n" "`r`n"  "There is an error in the program. Do you want to try again?"
+    MsgBox , % theOption, %theTitle% , %theContent%
+    IfMsgBox Yes
+    { 
+      Reload
+    }
+    else
+        ExitApp
+    return
+}
