@@ -42,10 +42,13 @@ Class CopyTranslator{
       }
     }
     
-    RegisterAppBar(){
-      CopyTranslator.switch()
-      CopyTranslator.ChangeStyle()
-      CopyTranslator.hadAppBar := true
+    PosSave(){
+      WinGetPos, HX,HY,HW,HH, % CopyTranslator.ahk_id 
+      CopyTranslator.pos := Object("X",HX,"Y",HY,"W",HW,"H",HH)
+      return
+    }
+    
+    PosChange(){
       Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_NEW:=0x0),UInt,&APPBARDATA)
       Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_QUERYPOS:=0x2),UInt,&APPBARDATA)
       Result := DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_SETPOS:=0x3),UInt,&APPBARDATA)
@@ -55,11 +58,28 @@ Class CopyTranslator{
       GW := NumGet(APPBARDATA, 24 ) - GX
       GH := NumGet(APPBARDATA, 28 ) - GY
      
-      WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% ;把一个窗口给移动到那个位置
+      WinMove,% CopyTranslator.ahk_id,, %GX%, %GY%, %GW%, %GH% 
       return
     }
     
+    RegisterAppBar(){
+      CopyTranslator.switch()
+      CopyTranslator.PosSave()
+      CopyTranslator.ChangeStyle()
+      CopyTranslator.PosChange()
+      CopyTranslator.hadAppBar := true
+      return
+    }
+    
+    PosRecover(){
+      thePos := CopyTranslator.pos
+      HX := thePos.X,HY := thePos.Y
+      ,HW := thePos.W,HH := thePos.H,
+      WinMove, % CopyTranslator.ahk_id,, %HX%, %HY%, %HW%, %HH%
+    }
+    
     RemoveAppBar(){
+      CopyTranslator.PosRecover()
       CopyTranslator.RestoreStyle()
       DllCall("Shell32.dll\SHAppBarMessage",UInt,(ABM_REMOVE := 0x1),UInt,&APPBARDATA)
       CopyTranslator.hadAppBar := false
@@ -84,12 +104,6 @@ Class CopyTranslator{
         WinSet, Style, +0xC00000,% CopyTranslator.ahk_id ; Restore the window's title bar
         WinSet, ExStyle, -0x80,% CopyTranslator.ahk_id   ; Restore it to the alt-tab list ;恢复到原来的属性
         WinSet, ExStyle, +0x00040000,% CopyTranslator.ahk_id   ; Turn on WS_EX_APPWINDOW
-        
-        thePos := CopyTranslator.pos
-        ,HX := thePos.X,HY := thePos.Y
-        ,HW := thePos.W,HH := thePos.H,
-        
-        WinMove, % CopyTranslator.ahk_id,, %HX%, %HY%, %HW%, %HH% ;恢复到原来的位置
         return
       }
     }
@@ -119,9 +133,6 @@ Class CopyTranslator{
 
   ChangeStyle(){
     if(!CopyTranslator.hadAppBar){
-      CopyTranslator.hadAppBar := true
-      WinGetPos, HX,HY,HW,HH, % CopyTranslator.ahk_id ;保存一下当前的位置
-      CopyTranslator.pos := Object("X",HX,"Y",HY,"W",HW,"H",HH)
       WinSet, Style, -0xC00000, % CopyTranslator.ahk_id  ; Remove the window's title bar 删除窗口的标题栏
       WinSet, ExStyle, +0x80, % CopyTranslator.ahk_id    ; Remove it from the alt-tab list 让他从切换栏中也移除
       WinSet, ExStyle, -0x00040000, % CopyTranslator.ahk_id    ; Turn off WS_EX_APPWINDOW 这个看不懂，反正也是去掉某一个窗口属性
