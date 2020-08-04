@@ -91,8 +91,8 @@ Class CopyTranslator{
     
     ahk_id[]{ 		
         get {
-            Type.assertNumber(this.hwnd)
-            return "ahk_id" " " this.hwnd
+            Type.assertNumber(CopyTranslator.hwnd)
+            return "ahk_id" " " CopyTranslator.hwnd
         }
         set {
             return
@@ -129,27 +129,27 @@ Class CopyTranslator{
   }
   
   getSwitcher(){
-    if(this.Switcher = ""){
-      this.Switcher := new Switcher()
-      this.Switcher.Options := ""
+    if(CopyTranslator.Switcher = ""){
+      CopyTranslator.Switcher := new Switcher()
+      CopyTranslator.Switcher.Options := ""
     }
-    return this.Switcher
+    return CopyTranslator.Switcher
   }
   switch(){
-    if(!WinActive(this.title)){
+    if(!WinActive(CopyTranslator.title)){
       isExist := false
       try{
-        isExist := this.getSwitcher().switch(this.title,this.config.path,this.config.winWaitSec)
+        isExist := CopyTranslator.getSwitcher().switch(CopyTranslator.title,CopyTranslator.config.path,CopyTranslator.config.winWaitSec)
         CopyTranslator.hwnd := WinExist(CopyTranslator.title)
       }
       catch,ex{
-        thePath :=  this.config.path
+        thePath :=  CopyTranslator.config.path
         PathInRootDir := CopyTranslator.findPathInRootDir()
         if(thePath != PathInRootDir){
-          this.config.path := PathInRootDir
-          if(this.config.path != "")
-            this.configFileControler.store(this.config) 
-          return this.switch()
+          CopyTranslator.config.path := PathInRootDir
+          if(CopyTranslator.config.path != "")
+            CopyTranslator.configFileControler.store(CopyTranslator.config) 
+          return CopyTranslator.switch()
         }
 
         theOption := 4+48
@@ -158,10 +158,10 @@ Class CopyTranslator{
         MsgBox , % theOption, %theTitle% , %theContent%
         IfMsgBox Yes
         { 
-          this.config.path := this.findPathOfCopyTranslator()
-          if(this.config.path != "")
-            this.configFileControler.store(this.config) 
-          return this.switch()
+          CopyTranslator.config.path := CopyTranslator.findPathOfCopyTranslator()
+          if(CopyTranslator.config.path != "")
+            CopyTranslator.configFileControler.store(CopyTranslator.config) 
+          return CopyTranslator.switch()
         }
         else
             ExitApp
