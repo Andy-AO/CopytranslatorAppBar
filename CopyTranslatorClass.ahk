@@ -103,8 +103,6 @@ Class CopyTranslator{
 
   QuitScript(ExitReason := "", ExitCode := ""){
     CopyTranslator.RemoveAppBar()
-    ;  This un-does the earlier SetParent
-    DllCall( "SetParent", "uint", CopyTranslator.hwnd, "uint", 0 )
     ExitApp
   }
 
