@@ -95,7 +95,7 @@ Off :=  NumPut( GY+GH, Off+0 )          ; rc.bottom
 Off :=  NumPut(     1, Off+0 )          ; lParam
 
 if(CopyTranslator.config.SelfStart){
-  CopyTranslator.RegisterAppBar()
+  CopyTranslator.ToggleGUI()
 }
 
 OnExit(new Method(CopyTranslator.QuitScript,CopyTranslator))
