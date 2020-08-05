@@ -28,7 +28,7 @@ Class CopyTranslator{
         CopyTranslator.config := CopyTranslator.configFileControler
               .init(Object("path","C:\Users\" A_UserName "\AppData\Local\Programs\copytranslator\copytranslator.exe"
                       ,"widthRatio",0.1
-                      ,"SelfStart",true
+                      ,"SelfStart",false
                       ,"winWaitSec",7))  
       }
       catch,ex{
