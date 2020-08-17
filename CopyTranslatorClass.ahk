@@ -7,7 +7,7 @@ Class CopyTranslator{
   static configFilePath := "config.json"
   ,ToolName := "Copytrans" "latorAppBar"
   ,configFileControler := ""
-  ,MesToastContent := "Press Alt+Shift+z or click the tray icon to switch the display / hide status."
+  ,MesToastContent := "Press Alt+Shift+z or click the tray icon to switch the show / hide status."
   ,MesToast := ""
   ,title := "Copytranslator ahk_exe copytranslator.exe"
   ,config := ""
