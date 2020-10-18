@@ -110,8 +110,14 @@ Class CopyTranslator{
     
     ahk_id[]{ 		
         get {
-            Type.assertNumber(CopyTranslator.hwnd)
-            return "ahk_id" " " CopyTranslator.hwnd
+            if(CopyTranslator.hwnd != ""){
+               Type.assertNumber(CopyTranslator.hwnd)
+               return "ahk_id" " " CopyTranslator.hwnd
+            }
+            else{
+              LogPrintln(CopyTranslator.hwnd,A_LineFile  "("  A_LineNumber  ")"  " : " "CopyTranslator.hwnd is empty >>> `r`n")
+              return
+            }
         }
         set {
             return
