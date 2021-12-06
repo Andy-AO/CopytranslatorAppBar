@@ -16,7 +16,6 @@ CopyTranslatorAppBar脚本，能够利用AppBar，很好的解决这个问题。
 ## 下载
 
 - [GitHub](https://github.com/Andy-AO/CopytranslatorAppBar/releases/)
-- [百度云](https://pan.baidu.com/s/1srosR0l6h5UVKqXKNnD15Q) 提取码:x33s
 
 ## 用法
 
@@ -41,9 +40,12 @@ CopyTranslatorAppBar脚本，能够利用AppBar，很好的解决这个问题。
     "path": "C:\\Users\\%YourUserName%\\AppData\\Local\\Programs\\copytranslator\\copytranslator.exe",
     "SelfStart": 1,
     "widthRatio": "0.1",
-    "winWaitSec": 7
+    "winWaitSec": 7,
+    "uEdge":2
 }
 ```
+
+窗口停靠位置：`uEdge` left=0,top=1,right=2,bottom=3，默认是 `2`，也就是在右侧停靠窗口
 
 ### path
 

@@ -29,7 +29,8 @@ Class CopyTranslator{
               .init(Object("path","C:\Users\" A_UserName "\AppData\Local\Programs\copytranslator\copytranslator.exe"
                       ,"widthRatio",0.1
                       ,"SelfStart",false
-                      ,"winWaitSec",7))  
+                      ,"winWaitSec",7
+                      ,"uEdge",2))  
       }
       catch,ex{
         if(_EX.isRuntimeException(ex))

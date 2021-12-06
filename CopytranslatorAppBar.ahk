@@ -1,5 +1,5 @@
 
-global Version := 0.1
+global Version := 0.2
 
 Hotstring("EndChars"," ")
 #Hotstring ? O Z
@@ -27,7 +27,13 @@ else{
 
 #Include %A_ScriptDir%\CopyTranslatorClass.ahk
 
-uEdge=2                                 ; left=0,top=1,right=2,bottom=3
+
+if(CopyTranslator.config.uEdge == ""){
+  uEdge:=2 ; left=0,top=1,right=2,bottom=3
+}
+else{
+  uEdge := CopyTranslator.config.uEdge   
+}
 uAppWidth := Ceil(CopyTranslator.config.widthRatio * A_ScreenWidth)                     ; "ideal" width for a vertical appbar
 uAppHeight=136                          ; "ideal" height when horizonal
 
